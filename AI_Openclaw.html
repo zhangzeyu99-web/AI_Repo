@@ -1,0 +1,1726 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OpenClaw在海外游戏运营与发行中的深度应用研究</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <style>
+      :root {
+          --primary: #1e293b;
+          --secondary: #475569;
+          --accent: #0ea5e9;
+          --muted: #f8fafc;
+          --border: #e2e8f0;
+      }
+      
+      body {
+          font-family: 'Inter', sans-serif;
+          line-height: 1.7;
+          color: var(--primary);
+          overflow-x: hidden;
+      }
+      
+      .serif {
+          font-family: 'Playfair Display', serif;
+      }
+      
+      .toc-sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 320px;
+          height: 100vh;
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          border-right: 1px solid var(--border);
+          z-index: 1000;
+          overflow-y: auto;
+          padding: 2rem 1.5rem;
+      }
+      
+      .main-content {
+          margin-left: 320px;
+          min-height: 100vh;
+      }
+      
+      .toc-link {
+          transition: all 0.2s ease;
+          border-left: 2px solid transparent;
+      }
+      
+      .toc-link:hover {
+          border-left-color: var(--accent);
+          background-color: rgba(14, 165, 233, 0.05);
+      }
+      
+      .toc-link.active {
+          border-left-color: var(--accent);
+          background-color: rgba(14, 165, 233, 0.1);
+          color: var(--accent);
+      }
+      
+      .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+          align-items: center;
+          min-height: 60vh;
+      }
+      
+      .hero-text {
+          background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+      }
+      
+      .citation {
+          color: var(--accent);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.2s ease;
+      }
+      
+      .citation:hover {
+          color: #0284c7;
+          text-decoration: underline;
+      }
+      
+      .insight-card {
+          background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+          border-left: 4px solid var(--accent);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      
+      .data-table {
+          background: white;
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          overflow: hidden;
+      }
+      
+      .data-table th {
+          background: var(--muted);
+          font-weight: 600;
+          padding: 1rem;
+          border-bottom: 1px solid var(--border);
+      }
+      
+      .data-table td {
+          padding: 1rem;
+          border-bottom: 1px solid var(--border);
+      }
+      
+      .section-divider {
+          height: 1px;
+          background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
+          margin: 4rem 0;
+      }
+      
+      /* Mermaid chart styling */
+      .mermaid-container {
+          display: flex;
+          justify-content: center;
+          min-height: 300px;
+          max-height: 800px;
+          background: #ffffff;
+          border: 2px solid #e5e7eb;
+          border-radius: 12px;
+          padding: 30px;
+          margin: 30px 0;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+          position: relative;
+          overflow: hidden;
+      }
+
+      .mermaid-container .mermaid {
+          width: 100%;
+          max-width: 100%;
+          height: 100%;
+          cursor: grab;
+          transition: transform 0.3s ease;
+          transform-origin: center center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          touch-action: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+      }
+
+      .mermaid-container .mermaid svg {
+          max-width: 100%;
+          height: 100%;
+          display: block;
+          margin: 0 auto;
+      }
+
+      .mermaid-container .mermaid:active {
+          cursor: grabbing;
+      }
+
+      .mermaid-container.zoomed .mermaid {
+          height: 100%;
+          width: 100%;
+          cursor: grab;
+      }
+
+      .mermaid-controls {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          display: flex;
+          gap: 10px;
+          z-index: 20;
+          background: rgba(255, 255, 255, 0.95);
+          padding: 8px;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .mermaid-control-btn {
+          background: #ffffff;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          padding: 10px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          color: #374151;
+          font-size: 14px;
+          min-width: 36px;
+          height: 36px;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .mermaid-control-btn:hover {
+          background: #f8fafc;
+          border-color: #3b82f6;
+          color: #3b82f6;
+          transform: translateY(-1px);
+      }
+
+      .mermaid-control-btn:active {
+          transform: scale(0.95);
+      }
+
+      /* Custom Mermaid theme for better contrast and unified styling */
+      .mermaid .node rect,
+      .mermaid .node circle,
+      .mermaid .node ellipse,
+      .mermaid .node polygon {
+          stroke-width: 2px !important;
+          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+      }
+      
+      .mermaid .node text {
+          font-family: 'Inter', sans-serif !important;
+          font-size: 13px !important;
+          font-weight: 500 !important;
+          fill: #1e293b !important;
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+      }
+      
+      /* Enhanced node styling with better contrast */
+      .mermaid .node[style*="fill:#e8f4fd"] text,
+      .mermaid .node[style*="fill:#dcfce7"] text,
+      .mermaid .node[style*="fill:#fef3c7"] text,
+      .mermaid .node[style*="fill:#fee2e2"] text {
+          fill: #1e293b !important;
+          font-weight: 600 !important;
+      }
+      
+      .mermaid .node[style*="fill:#e0e7ff"] text {
+          fill: #1e293b !important;
+          font-weight: 600 !important;
+      }
+      
+      .mermaid .edgePath path {
+          stroke-width: 2px !important;
+          stroke: #64748b !important;
+      }
+      
+      .mermaid .edgeLabel {
+          background-color: rgba(255, 255, 255, 0.9) !important;
+          border-radius: 4px !important;
+          padding: 2px 6px !important;
+          border: 1px solid #e2e8f0 !important;
+      }
+      
+      .mermaid .edgeLabel text {
+          font-family: 'Inter', sans-serif !important;
+          font-size: 11px !important;
+          fill: #475569 !important;
+          font-weight: 500 !important;
+      }
+
+      @media (max-width: 1024px) {
+          .toc-sidebar {
+              transform: translateX(-100%);
+              transition: transform 0.3s ease;
+          }
+          
+          .toc-sidebar.open {
+              transform: translateX(0);
+          }
+          
+          .main-content {
+              margin-left: 0;
+          }
+          
+          .hero-grid {
+              grid-template-columns: 1fr;
+              text-align: center;
+          }
+
+          /* Responsive mermaid controls */
+          .mermaid-control-btn:not(.reset-zoom) {
+              display: none;
+          }
+          .mermaid-controls {
+              top: auto;
+              bottom: 15px;
+              right: 15px;
+          }
+      }
+
+      /* Small screen adjustments */
+      @media (max-width: 768px) {
+          .hero-text {
+              font-size: 1.875rem; /* text-3xl */
+              line-height: 2.25rem;
+          }
+          .hero-grid img {
+              height: 12rem; /* h-48 */
+          }
+          .hero-grid > div {
+              padding: 0 1rem; /* px-4 */
+          }
+          #hero .text-lg {
+              font-size: 1rem; /* text-base */
+          }
+          #hero .text-xl {
+              font-size: 1.125rem; /* text-lg */
+          }
+          #hero p {
+              word-wrap: break-word;
+          }
+      }
+  </style>
+<base target="_blank">
+</head>
+
+<body class="bg-gray-50">
+  <!-- Table of Contents Sidebar -->
+  <nav class="toc-sidebar">
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-gray-900 mb-4">目录导航</h2>
+      <div class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded"></div>
+    </div>
+
+    <ul class="space-y-3 text-sm">
+      <li>
+        <a href="#hero" class="toc-link block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900">概览</a>
+      </li>
+      <li>
+        <a href="#tech-implementation" class="toc-link block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900">技术实现层面</a>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>
+            <a href="#automation-scripts" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">自动化脚本编写</a>
+          </li>
+          <li>
+            <a href="#game-testing" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">智能游戏测试</a>
+          </li>
+          <li>
+            <a href="#localization-tools" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">本地化工具</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#business-operations" class="toc-link block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900">商业运营层面</a>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>
+            <a href="#market-analysis" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">市场分析</a>
+          </li>
+          <li>
+            <a href="#user-research" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">用户行为研究</a>
+          </li>
+          <li>
+            <a href="#marketing-automation" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">营销自动化</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#distribution-strategy" class="toc-link block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900">发行策略层面</a>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>
+            <a href="#process-optimization" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">流程优化</a>
+          </li>
+          <li>
+            <a href="#version-management" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">版本管理</a>
+          </li>
+          <li>
+            <a href="#compliance-checks" class="toc-link block px-3 py-1 rounded-md text-gray-600 hover:text-gray-800 text-xs">合规检查</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#implementation" class="toc-link block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900">实施路径</a>
+      </li>
+    </ul>
+
+    <div class="mt-8 pt-6 border-t border-gray-200">
+      <p class="text-xs text-gray-500 leading-relaxed">
+        本研究基于OpenClaw平台的实际应用案例，深入分析其在海外游戏运营中的全链条价值。
+      </p>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section id="hero" class="bg-white">
+      <div class="hero-grid max-w-7xl mx-auto px-8 py-16">
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <h1 class="serif text-4xl lg:text-5xl font-bold leading-tight">
+              OpenClaw在<span class="hero-text italic">海外游戏运营</span>与发行中的
+              <span class="hero-text italic">深度应用研究</span>
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed">
+              开源AI代理平台如何重塑全球化游戏发行的技术、运营与策略范式
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-4 text-sm">
+            <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-full font-medium">
+              <i class="fas fa-robot mr-2"></i>AI代理自动化
+            </span>
+            <span class="px-4 py-2 bg-green-50 text-green-700 rounded-full font-medium">
+              <i class="fas fa-globe mr-2"></i>全球化运营
+            </span>
+            <span class="px-4 py-2 bg-purple-50 text-purple-700 rounded-full font-medium">
+              <i class="fas fa-cogs mr-2"></i>技术实现
+            </span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop" alt="AI代理平台操作界面展示自动化工作流程" class="w-full h-80 object-cover rounded-2xl shadow-2xl" size="medium" aspect="wide" style="photo" query="AI代理平台操作界面" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Executive Summary -->
+    <section class="bg-gray-50 py-16">
+      <div class="max-w-4xl mx-auto px-8">
+        <div class="insight-card rounded-2xl p-8 mb-12">
+          <h2 class="serif text-2xl font-bold mb-6 text-gray-900">核心洞察</h2>
+          <div class="prose prose-lg max-w-none">
+            <p class="text-gray-700 leading-relaxed mb-4">
+              OpenClaw作为开源AI代理平台，通过自然语言驱动的自动化能力，正在重塑海外游戏运营与发行的全链条——从技术开发的脚本生成、智能测试、本地化工具，到商业运营的市场分析、用户研究、营销自动化，再到发行策略的多平台协调、版本管理、合规风控，实现效率数量级提升与成本结构性优化。
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              其核心优势在于<strong>本地部署保障数据主权</strong>、<strong>持久化记忆积累组织知识</strong>、<strong>模型无关架构灵活适配</strong>，以及<strong>自主技能扩展适应快速变化</strong>。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Implementation Section -->
+    <section id="tech-implementation" class="bg-white py-20">
+      <div class="max-w-6xl mx-auto px-8">
+        <header class="text-center mb-16">
+          <h2 class="serif text-4xl font-bold text-gray-900 mb-4">技术实现层面的核心能力与应用</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            从自动化脚本到智能测试，OpenClaw如何重构游戏开发的技术基础设施
+          </p>
+        </header>
+
+        <!-- Automation Scripts -->
+        <div id="automation-scripts" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">自动化脚本编写与开发工作流优化</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">自然语言驱动的代码生成</h4>
+              <p class="text-gray-700 leading-relaxed mb-4">
+                OpenClaw的核心突破在于将大型语言模型的语义理解能力与本地系统执行深度整合，实现从自然语言需求描述到可执行代码的端到端转化。与传统IDE的代码补全或模板生成不同，OpenClaw能够基于高层意图自主规划并实现完整的游戏功能模块。
+                <a href="https://www.linkedin.com/posts/akashdesai1_update-we-scrapped-qa-agent-and-rebuilt-activity-7426696901443432448-CsU-" class="citation" target="_blank">[93]</a>
+                <a href="https://www.tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-fa" class="citation" target="_blank">[371]</a>
+              </p>
+
+              <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-4">
+                <p class="text-blue-800 font-medium">
+                  <i class="fas fa-lightbulb mr-2"></i>
+                  实际应用案例：开发者通过Telegram发送&#34;创建一个支持ELO评分的玩家匹配系统&#34;，代理即可分析现有代码库结构，生成包含数据库设计、API接口、前端交互的完整实现
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/h2cdn.appinn.me/3a1d0ca2e25f5007e44be7dd4ffe476dcd4a1f7e.gif" alt="AI代码生成工具界面展示自动化脚本编写功能" class="w-full h-64 object-cover rounded-lg shadow-lg" size="medium" aspect="wide" style="photo" query="AI代码生成工具界面" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+            </div>
+          </div>
+
+          <!-- Localization Workflow Table -->
+          <div class="mb-12">
+            <h4 class="text-lg font-semibold text-gray-900 mb-6">本地化脚本自动化开发</h4>
+            <div class="data-table">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th class="text-left">工作流阶段</th>
+                    <th class="text-left">核心功能</th>
+                    <th class="text-left">OpenClaw实现方式</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-medium">文本提取</td>
+                    <td>识别并提取多格式资源中的待翻译字符串</td>
+                    <td>遍历Unity/Unreal项目目录，解析Prefab/Scene/Script/CSV/JSON/XML，标记占位符与格式控制符</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">术语管理</td>
+                    <td>构建并强制校验项目专属术语库</td>
+                    <td>基于世界观文档自动识别关键概念，实时同步至所有活跃翻译任务</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">翻译编排</td>
+                    <td>机器翻译初稿+人工审校的工作流管理</td>
+                    <td>调用DeepL/Google Translate API生成初稿，集成TMS平台分配审校任务</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">质量验证</td>
+                    <td>长度限制、格式完整性、伪本地化测试</td>
+                    <td>执行LQA检查，生成伪本地化资源验证UI布局，拦截明显缺陷</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">资源回注</td>
+                    <td>翻译结果合并至游戏资源并触发构建</td>
+                    <td>自动化导入、格式转换、多语言打包、版本控制提交</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              据行业实践，AI辅助的游戏本地化可将<strong>翻译成本降低30%-50%</strong>
+              <a href="https://phrase.com/blog/posts/ai-gaming-personalization-efficiency-localization/" class="citation" target="_blank">[443]</a>
+              <a href="https://www.youxituoluo.com/530868.html" class="citation" target="_blank">[536]</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Game Testing -->
+        <div id="game-testing" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">智能游戏测试与质量保证体系</h3>
+
+          <!-- QA Agent Architecture -->
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">AI驱动的QA代理架构</h4>
+              <p class="text-gray-700 leading-relaxed mb-4">
+                Akash Desai在LinkedIn分享的QA代理重建实践，为OpenClaw在游戏测试领域的应用提供了可验证的生产级案例。该团队此前采用Playwright构建传统自动化测试，面临<strong>选择器脆弱性</strong>的顽疾——UI微调即导致CSS/XPath选择器失效，维护成本持续攀升。
+                <a href="https://www.linkedin.com/posts/akashdesai1_update-we-scrapped-qa-agent-and-rebuilt-activity-7426696901443432448-CsU-" class="citation" target="_blank">[93]</a>
+              </p>
+
+              <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                <p class="text-green-800 font-medium">
+                  <i class="fas fa-chart-line mr-2"></i>
+                  关键成果：测试覆盖率从10项扩展至100项检查，仅用时一周，实现10倍效率提升
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <div class="data-table">
+                <table class="w-full">
+                  <thead>
+                    <tr>
+                      <th class="text-left">维度</th>
+                      <th class="text-left">传统Playwright方案</th>
+                      <th class="text-left">OpenClaw AI驱动方案</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-medium">元素定位</td>
+                      <td>硬编码CSS/XPath选择器，UI变化即失效</td>
+                      <td>智能快照系统识别交互元素，AI基于功能语义动态定位</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium">测试指令</td>
+                      <td>预设脚本，固定执行路径</td>
+                      <td>自然语言动态指令：&#34;测试此功能&#34;&#34;验证该流程&#34;</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium">适应能力</td>
+                      <td>需人工更新脚本适应变化</td>
+                      <td>自主理解预期行为与实际结果差异，动态调整策略</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium">缺陷管理</td>
+                      <td>人工捕获信息、填写工单</td>
+                      <td>自动截图、日志、上下文，直接创建结构化工单</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance Monitoring -->
+          <div class="mb-12">
+            <h4 class="text-lg font-semibold text-gray-900 mb-6">性能与稳定性监控</h4>
+            <div class="data-table">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th class="text-left">监控维度</th>
+                    <th class="text-left">核心指标</th>
+                    <th class="text-left">OpenClaw实现方式</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-medium">性能基线</td>
+                    <td>FPS、内存、CPU/GPU占用</td>
+                    <td>定时执行标准化测试场景，采集指标并与历史版本比对，自动标记退化点</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">网络稳定性</td>
+                    <td>延迟、丢包、带宽自适应</td>
+                    <td>配置网络损伤参数，验证弱网环境下的容错处理与体验降级策略</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">崩溃分析</td>
+                    <td>崩溃率、ANR率、堆栈分类</td>
+                    <td>集成Crashlytics/Bugly，自动符号化解析、聚类相似崩溃、关联代码变更</td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">内存泄漏</td>
+                    <td>堆快照分析、对象引用链</td>
+                    <td>定期采集堆快照，识别异常增长对象类型，定位可疑代码范围</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              代理的<strong>主动式任务调度</strong>支持配置周期性监控任务，无需人工值守即可实现持续质量守护
+              <a href="https://zhuanlan.zhihu.com/p/2003992539699640264" class="citation" target="_blank">[203]</a>
+              <a href="https://flypix.ai/openclaw-automations-save-time/" class="citation" target="_blank">[315]</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Localization Tools -->
+        <div id="localization-tools" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">本地化工具开发与多语言支持</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">智能翻译工作流引擎</h4>
+              <p class="text-gray-700 leading-relaxed mb-4">
+                OpenClaw驱动的翻译引擎超越传统机器翻译，构建<strong>四层智能架构</strong>。这种架构确保翻译不仅准确，而且符合游戏语境和文化背景，为玩家提供更自然的游戏体验。
+              </p>
+
+              <div class="space-y-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-blue-900 mb-2">预处理层</h5>
+                  <p class="text-blue-800 text-sm">文本结构解析与语境标注，识别对话分支、条件文本、嵌套占位符</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-green-900 mb-2">翻译层</h5>
+                  <p class="text-green-800 text-sm">上下文感知的多策略翻译，系统提示→NMT快速通道；剧情台词→LLM深度翻译</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-yellow-900 mb-2">后处理层</h5>
+                  <p class="text-yellow-800 text-sm">质量验证与一致性保障，术语匹配度扫描、数字/占位符完整性验证</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-purple-900 mb-2">集成层</h5>
+                  <p class="text-purple-800 text-sm">资源回注与构建触发，自动化导入、格式转换、多语言打包</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/s3.cn-north-1.amazonaws.com.cn/30f535409777c1398915d899afca9147acd743a0.jpg" alt="AI翻译工作流程示意图" class="w-full h-64 object-cover rounded-lg shadow-lg mb-6" size="medium" aspect="wide" query="AI翻译工作流程" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h5 class="font-semibold text-gray-900 mb-4">多媒体本地化处理</h5>
+                <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                  <strong>视频内容智能剪辑</strong>是效率提升最显著的场景。TekinGame案例显示，OpenClaw将<strong>4小时人工流程压缩至15分钟</strong>（16倍效率提升）
+                  <a href="https://www.tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-fa" class="citation" target="_blank">[371]</a>
+                  <a href="https://www.tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-en" class="citation" target="_blank">[489]</a>
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <span class="font-medium">传统流程：</span>
+                    <ul class="mt-1 space-y-1 text-gray-600">
+                      <li>• 人工遍历数万文件</li>
+                      <li>• 人工撰写分镜与旁白</li>
+                      <li>• 人工听写、翻译、对轴</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <span class="font-medium">OpenClaw：</span>
+                    <ul class="mt-1 space-y-1 text-gray-600">
+                      <li>• 视觉理解自动标注</li>
+                      <li>• 自动生成完整脚本</li>
+                      <li>• ASR提取+自动同步</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Business Operations Section -->
+    <section id="business-operations" class="bg-gray-50 py-20">
+      <div class="max-w-6xl mx-auto px-8">
+        <header class="text-center mb-16">
+          <h2 class="serif text-4xl font-bold text-gray-900 mb-4">商业运营层面的智能化转型</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            从市场情报到用户洞察，AI驱动的运营决策新范式
+          </p>
+        </header>
+
+        <!-- Market Analysis -->
+        <div id="market-analysis" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">海外市场分析与情报系统</h3>
+
+          <div class="grid lg:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-chart-bar text-blue-600 text-xl"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-3">多源数据采集</h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                自动化采集应用商店、社交媒体、竞品动态、视频平台数据，构建完整市场情报网络
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-brain text-green-600 text-xl"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-3">智能趋势分析</h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                区域偏好解读、品类机会识别、文化热点联动，原始数据转化为可执行洞察
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-file-alt text-purple-600 text-xl"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-3">定制化报告</h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                日常仪表盘、周度动态、月度洞察、季度战略评估，多语言并行输出
+              </p>
+            </div>
+          </div>
+
+          <div class="insight-card rounded-2xl p-8 mb-8">
+            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+              <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+              核心洞察：自适应解析能力
+            </h4>
+            <p class="text-gray-700 leading-relaxed">
+              当目标网站更新布局导致传统爬虫失效时，OpenClaw通过视觉分析重新识别关键元素，自主修复采集逻辑。这种能力确保了市场情报系统的持续稳定运行，避免了人工维护的高昂成本。
+              <a href="https://flypix.ai/openclaw-automations-save-time/" class="citation" target="_blank">[315]</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- User Research -->
+        <div id="user-research" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">用户行为研究与体验优化</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">游戏内行为深度分析</h4>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-funnel-dollar text-blue-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">玩家旅程漏斗</h5>
+                    <p class="text-gray-600 text-sm">自动构建关键路径转化模型，识别流失瓶颈环节</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-chart-line text-green-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">留存预测</h5>
+                    <p class="text-gray-600 text-sm">机器学习模型识别风险信号，将&#34;事后补救&#34;转为&#34;事前预防&#34;</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-users text-purple-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">社交关系网络</h5>
+                    <p class="text-gray-600 text-sm">构建游戏内社交图谱，识别KOL、桥梁玩家、孤立用户</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">反馈情感智能解析</h4>
+              <div class="space-y-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-blue-900 mb-2">多语言统一处理</h5>
+                  <p class="text-blue-800 text-sm">识别100+语言，情感极性判断，情绪强度评分</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-green-900 mb-2">关键议题聚类</h5>
+                  <p class="text-green-800 text-sm">主题模型自动归类bug报告、功能建议、平衡抱怨、赞美</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                  <h5 class="font-semibold text-yellow-900 mb-2">紧急度评估</h5>
+                  <p class="text-yellow-800 text-sm">结合情感强度、传播速度、核心用户参与的危机预警</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+              <i class="fas fa-trophy text-yellow-500 mr-2"></i>
+              成功案例：Mixpanel MCP集成实践
+            </h4>
+            <p class="text-gray-700 leading-relaxed">
+              OpenClaw识别出表面健康的&#34;僵尸用户&#34;——事件量正常但100%为低价值操作、零核心功能使用，当天即触发挽回干预，成功保留账户。这展示了AI在用户行为分析中的深度洞察能力。
+              <a href="https://www.foxessellfaster.com/blog/openclaw-use-cases-directory/" class="citation" target="_blank">[345]</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Marketing Automation -->
+        <div id="marketing-automation" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">营销活动自动化与效果优化</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">创意内容智能生产</h4>
+              <div class="data-table mb-6">
+                <table class="w-full">
+                  <thead>
+                    <tr>
+                      <th class="text-left">内容类型</th>
+                      <th class="text-left">传统流程</th>
+                      <th class="text-left">OpenClaw自动化</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-medium">多语言广告文案</td>
+                      <td>人工撰写→翻译→适配各平台格式</td>
+                      <td>基于核心卖点批量生成，自动嵌入动态参数</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium">宣传视频脚本</td>
+                      <td>创意构思→分镜撰写→制作需求文档</td>
+                      <td>生成完整分镜+时间轴+情绪标注</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium">平台格式转换</td>
+                      <td>人工裁剪多版本</td>
+                      <td>智能识别视觉焦点，自动裁剪多规格</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                <p class="text-green-800 font-medium">
+                  <i class="fas fa-clock mr-2"></i>
+                  效率量化：视频本地化从4小时降至15分钟（16倍提升），使得小团队也能维持大厂级内容产出频率
+                  <a href="https://www.tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-fa" class="citation" target="_blank">[371]</a>
+                  <a href="https://www.tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-en" class="citation" target="_blank">[489]</a>
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/ucc.alicdn.com/6bcb88eccccc39487988faebffba6075653ec3c9.png" alt="AI营销活动自动化操作界面" class="w-full h-48 object-cover rounded-lg shadow-lg mb-6" size="small" aspect="wide" style="photo" query="AI营销自动化界面" referrerpolicy="no-referrer" data-modified="1" data-score="0.00"/>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                  <h5 class="font-semibold text-gray-900 mb-2">投放策略动态优化</h5>
+                  <p class="text-gray-600 text-sm">实时ROAS监控、受众画像迭代、竞品策略反推</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                  <h5 class="font-semibold text-gray-900 mb-2">KOL合作管理</h5>
+                  <p class="text-gray-600 text-sm">智能筛选、个性化触达、效果追踪的完整闭环</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Distribution Strategy Section -->
+    <section id="distribution-strategy" class="bg-white py-20">
+      <div class="max-w-6xl mx-auto px-8">
+        <header class="text-center mb-16">
+          <h2 class="serif text-4xl font-bold text-gray-900 mb-4">发行策略层面的流程重构</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            多平台协调、版本管理、合规风控的智能化革命
+          </p>
+        </header>
+
+        <!-- Process Optimization -->
+        <div id="process-optimization" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">全球发行流程优化与自动化</h3>
+
+          <!-- Bot Games Model -->
+          <div class="mb-12">
+            <h4 class="text-lg font-semibold text-gray-900 mb-6">&#34;Bot Games&#34;模式启示：AI自主运营</h4>
+            <div class="grid lg:grid-cols-3 gap-6 mb-8">
+              <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                  <i class="fas fa-wrench text-white text-xl"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">夜间自动修复</h5>
+                <p class="text-gray-700 text-sm">基于玩家反馈数据，代理自主分析、修复、测试、部署</p>
+              </div>
+              <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                  <i class="fas fa-target text-white text-xl"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">高层意图实现</h5>
+                <p class="text-gray-700 text-sm">人类设定目标，代理自主探索实现路径</p>
+              </div>
+              <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+                  <i class="fas fa-rocket text-white text-xl"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">无监督进化</h5>
+                <p class="text-gray-700 text-sm">数据驱动假设生成→A/B测试验证→全量部署的完整闭环</p>
+              </div>
+            </div>
+
+            <div class="insight-card rounded-2xl p-8">
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-eye text-blue-500 mr-2"></i>
+                核心价值洞察
+              </h4>
+              <p class="text-gray-700 leading-relaxed">
+                这一模式对海外发行的核心价值在于<strong>时区无差别运营</strong>——单一代理集群可同时管理数十个地区版本，基于各市场实时数据自主优化，将运营成本结构从&#34;线性人力增长&#34;转变为&#34;边际成本递减&#34;。
+                <a href="https://www.hubwiz.com/blog/top10-wild-things-built-with-openclaw/" class="citation" target="_blank">[181]</a>
+                <a href="https://tech.ifeng.com/c/8qvHnRHeug8" class="citation" target="_blank">[339]</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version Management -->
+        <div id="version-management" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">多地区多语言版本管理</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">版本矩阵智能协调</h4>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-shield-alt text-blue-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">内容审查差异</h5>
+                    <p class="text-gray-600 text-sm">维护&#34;主版本-地区变体&#34;映射，变更影响分析</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-calendar text-green-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">文化节日匹配</h5>
+                    <p class="text-gray-600 text-sm">全球日历智能匹配，活动方案本地化适配</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-cog text-purple-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">专属内容生命周期</h5>
+                    <p class="text-gray-600 text-sm">独立追踪开发中/测试中/已上线/已下架状态</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">本地化资产版本控制</h4>
+              <div class="data-table">
+                <table class="w-full">
+                  <thead>
+                    <tr>
+                      <th class="text-left">控制机制</th>
+                      <th class="text-left">技术实现</th>
+                      <th class="text-left">质量保障</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-medium text-sm">哈希校验</td>
+                      <td class="text-sm">计算文件指纹，仅传输变更内容</td>
+                      <td class="text-sm">版本完整性验证</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium text-sm">TM版本同步</td>
+                      <td class="text-sm">与代码版本协同管理，分支策略</td>
+                      <td class="text-sm">术语一致性跨版本保持</td>
+                    </tr>
+                    <tr>
+                      <td class="font-medium text-sm">并行构建</td>
+                      <td class="text-sm">识别无依赖任务，分发至多执行节点</td>
+                      <td class="text-sm">数十种语言构建从数小时降至数十分钟</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Checks -->
+        <div id="compliance-checks" class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">自动化合规性检查与风险管理</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="space-y-6">
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500">
+                <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                  <i class="fas fa-shield-alt text-red-500 mr-2"></i>
+                  内容分级与年龄验证
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">分级自动对标：ESRB、PEGI、CERO、GRAC、CADPA</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">敏感内容检测：暴力、性暗示、赌博、药物</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">未成年人保护：时长限制、消费上限、家长控制</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
+                <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                  <i class="fas fa-lock text-blue-500 mr-2"></i>
+                  数据隐私与安全
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">隐私政策生成：GDPR、CCPA、PIPL适配</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">跨境传输合规：本地化存储、加密机制</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">用户权利响应：访问/更正/删除请求自动化</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
+                <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                  <i class="fas fa-copyright text-green-500 mr-2"></i>
+                  知识产权与商业合规
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">版权溯源：图像、音频、字体、代码库授权状态</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">抽卡/开箱合规：概率公示、保底机制、数据审计</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">广告内容合规：真实性声明、竞品比较预审</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-yellow-500">
+                <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                  <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                  地缘政治与文化敏感风险
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">地图边界争议：扫描领土标识，生成替代方案</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">历史/宗教敏感：文化数据库检测，快速响应预案</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                    <span class="text-gray-700 text-sm">实时舆情监控：分钟级预警，多语言声明生成</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Implementation Path Section -->
+    <section id="implementation" class="bg-gray-50 py-20">
+      <div class="max-w-6xl mx-auto px-8">
+        <header class="text-center mb-16">
+          <h2 class="serif text-4xl font-bold text-gray-900 mb-4">实施路径与关键成功因素</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            分阶段部署策略、成本效益评估与风险管控框架
+          </p>
+        </header>
+
+        <!-- Phased Deployment -->
+        <div class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">分阶段部署策略</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="space-y-6">
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="text-lg font-semibold text-gray-900">试点验证</h4>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">1-2个月</span>
+                </div>
+                <div class="space-y-3">
+                  <p class="text-gray-700 text-sm"><strong>核心目标：</strong>技术可行性验证，团队信心建立</p>
+                  <p class="text-gray-700 text-sm"><strong>推荐切入点：</strong>QA自动化或社区管理自动化</p>
+                  <p class="text-gray-700 text-sm"><strong>成功指标：</strong>测试覆盖率提升30%，人工工单减少20%</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="text-lg font-semibold text-gray-900">能力扩展</h4>
+                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">3-6个月</span>
+                </div>
+                <div class="space-y-3">
+                  <p class="text-gray-700 text-sm"><strong>核心目标：</strong>场景扩展，组织知识沉淀</p>
+                  <p class="text-gray-700 text-sm"><strong>推荐切入点：</strong>本地化工作流、市场情报采集</p>
+                  <p class="text-gray-700 text-sm"><strong>成功指标：</strong>本地化周期缩短50%，报告生成时间从3天降至2小时</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-purple-500">
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="text-lg font-semibold text-gray-900">深度集成</h4>
+                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">6-12个月</span>
+                </div>
+                <div class="space-y-3">
+                  <p class="text-gray-700 text-sm"><strong>核心目标：</strong>核心业务系统嵌入，规模化价值</p>
+                  <p class="text-gray-700 text-sm"><strong>推荐切入点：</strong>CI/CD管道智能化、多地区发行协调</p>
+                  <p class="text-gray-700 text-sm"><strong>成功指标：</strong>版本发布频率提升2倍，发行事故减少40%</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-orange-500">
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="text-lg font-semibold text-gray-900">自主演进</h4>
+                  <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">12个月+</span>
+                </div>
+                <div class="space-y-3">
+                  <p class="text-gray-700 text-sm"><strong>核心目标：</strong>AI驱动运营模式创新</p>
+                  <p class="text-gray-700 text-sm"><strong>推荐切入点：</strong>动态难度调整、个性化推荐、&#34;Bot Games&#34;模式</p>
+                  <p class="text-gray-700 text-sm"><strong>成功指标：</strong>玩家留存率提升15%，运营成本降低25%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cost-Benefit Analysis -->
+        <div class="mb-20">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">成本效益评估框架</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">
+                <i class="fas fa-dollar-sign text-red-500 mr-2"></i>
+                成本维度分析
+              </h4>
+              <div class="space-y-4">
+                <div class="border-l-4 border-red-500 pl-4">
+                  <h5 class="font-medium text-gray-900">LLM API调用</h5>
+                  <p class="text-gray-600 text-sm">按token计费，复杂任务成本显著</p>
+                  <p class="text-gray-600 text-xs mt-1">优化策略：任务分级、上下文压缩</p>
+                </div>
+                <div class="border-l-4 border-orange-500 pl-4">
+                  <h5 class="font-medium text-gray-900">基础设施</h5>
+                  <p class="text-gray-600 text-sm">服务器、存储、网络</p>
+                  <p class="text-gray-600 text-xs mt-1">优化策略：云平台专属优惠，月成本$8-30起步
+                    <a href="https://www.alibabacloud.com/blog/openclaw-launches-on-alibaba-cloud-simple-application-server_602845" class="citation" target="_blank">[388]</a>
+                  </p>
+                </div>
+                <div class="border-l-4 border-yellow-500 pl-4">
+                  <h5 class="font-medium text-gray-900">人力投入</h5>
+                  <p class="text-gray-600 text-sm">初期配置、技能开发、持续优化</p>
+                  <p class="text-gray-600 text-xs mt-1">优化策略：复用社区技能，建立内部技能库</p>
+                </div>
+                <div class="border-l-4 border-purple-500 pl-4">
+                  <h5 class="font-medium text-gray-900">风险成本</h5>
+                  <p class="text-gray-600 text-sm">错误输出、安全事件、合规问题</p>
+                  <p class="text-gray-600 text-xs mt-1">优化策略：关键决策人工审核，沙箱模式隔离</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">
+                <i class="fas fa-chart-line text-green-500 mr-2"></i>
+                收益维度量化
+              </h4>
+              <div class="space-y-4">
+                <div class="border-l-4 border-green-500 pl-4">
+                  <h5 class="font-medium text-gray-900">时间效率</h5>
+                  <p class="text-gray-600 text-sm">任务完成时长压缩比例</p>
+                  <p class="text-gray-600 text-xs mt-1">案例：视频剪辑4小时→15分钟（16倍）
+                    <a href="https://www.tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-fa" class="citation" target="_blank">[371]</a>
+                  </p>
+                </div>
+                <div class="border-l-4 border-blue-500 pl-4">
+                  <h5 class="font-medium text-gray-900">人力释放</h5>
+                  <p class="text-gray-600 text-sm">全职人力equivalent节约</p>
+                  <p class="text-gray-600 text-xs mt-1">追踪代理接管任务的原人工投入</p>
+                </div>
+                <div class="border-l-4 border-indigo-500 pl-4">
+                  <h5 class="font-medium text-gray-900">质量改进</h5>
+                  <p class="text-gray-600 text-sm">缺陷发现率、玩家满意度变化</p>
+                  <p class="text-gray-600 text-xs mt-1">A/B测试与长期趋势分析</p>
+                </div>
+                <div class="border-l-4 border-pink-500 pl-4">
+                  <h5 class="font-medium text-gray-900">机会成本</h5>
+                  <p class="text-gray-600 text-sm">市场响应速度、竞争窗口捕获</p>
+                  <p class="text-gray-600 text-xs mt-1">流程timestamps分析，错失机会案例复盘</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Management -->
+        <div class="mb-12">
+          <h3 class="serif text-2xl font-bold text-gray-900 mb-8">风险管控与持续优化</h3>
+
+          <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">
+                <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                主要风险类别
+              </h4>
+              <div class="space-y-4">
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h5 class="font-semibold text-red-900 mb-2">模型幻觉</h5>
+                  <p class="text-red-800 text-sm">生成看似合理但实际错误的输出</p>
+                  <p class="text-red-700 text-xs mt-1">缓解：人工审核、多模型交叉验证、置信度阈值</p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                  <h5 class="font-semibold text-orange-900 mb-2">安全与权限</h5>
+                  <p class="text-orange-800 text-sm">系统级访问能力被恶意利用</p>
+                  <p class="text-orange-700 text-xs mt-1">缓解：最小权限原则、沙箱隔离、完整审计日志</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <h5 class="font-semibold text-yellow-900 mb-2">成本失控</h5>
+                  <p class="text-yellow-800 text-sm">LLM API调用量激增，无限循环</p>
+                  <p class="text-yellow-700 text-xs mt-1">缓解：预算上限、上下文压缩、成本监控仪表板</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                  <h5 class="font-semibold text-purple-900 mb-2">依赖锁定</h5>
+                  <p class="text-purple-800 text-sm">特定模型/服务供应中断</p>
+                  <p class="text-purple-700 text-xs mt-1">缓解：模型无关架构、多供应商策略、本地备份</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+              <h4 class="text-lg font-semibold text-gray-900 mb-6">
+                <i class="fas fa-sync-alt text-blue-500 mr-2"></i>
+                持续优化闭环
+              </h4>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-search text-blue-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">定期审查</h5>
+                    <p class="text-gray-600 text-sm">审查执行日志识别改进机会</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-chart-bar text-green-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">成本监控</h5>
+                    <p class="text-gray-600 text-sm">监控成本趋势优化模型选择</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-download text-purple-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">功能更新</h5>
+                    <p class="text-gray-600 text-sm">跟踪社区与官方更新采纳新功能</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <i class="fas fa-book text-yellow-600 text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium text-gray-900">知识积累</h5>
+                    <p class="text-gray-600 text-sm">积累项目专属最佳实践知识库</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-gray-700 text-sm leading-relaxed">
+                  参考来源：<a href="https://tekingame.ir/en/blog/openclaw-ai-agent-full-anatomy-hyper-expansion-fa" class="citation" target="_blank">[353]</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="bg-white py-16">
+      <div class="max-w-4xl mx-auto px-8 text-center">
+        <div class="insight-card rounded-2xl p-12">
+          <h2 class="serif text-3xl font-bold text-gray-900 mb-8">结论与展望</h2>
+          <div class="prose prose-lg max-w-none">
+            <p class="text-gray-700 leading-relaxed mb-6">
+              OpenClaw作为开源自主AI代理平台，通过<strong>自然语言驱动的自动化能力</strong>、<strong>持久化记忆积累的组织知识</strong>、<strong>模型无关架构的灵活适配</strong>，以及<strong>自主技能扩展的进化能力</strong>，正在重塑海外游戏运营与发行的全链条效率结构。
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-6">
+              从技术开发的智能测试与本地化工具，到商业运营的市场洞察与玩家关系，再到发行策略的多平台协调与合规风控，OpenClaw使中小团队能够获得以往只有大厂才具备的运营成熟度，同时将大型组织的运营效率推向新的数量级。
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              随着&#34;Bot Games&#34;等前沿探索的成熟，AI自主运营将从辅助工具演进为战略能力，重新定义全球游戏市场的竞争格局。成功实施的关键在于<strong>分阶段验证</strong>、<strong>全面的成本效益评估</strong>、以及<strong>针对新风险类别的主动管控机制</strong>——在技术能力快速演进的同时，建立人机协作的最佳实践边界。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="max-w-6xl mx-auto px-8 text-center">
+        <div class="mb-8">
+          <p class="text-gray-300 text-sm">
+            本研究基于OpenClaw平台的实际应用案例，深入分析其在海外游戏运营中的全链条价值。所有数据来源均已标注引用链接。
+          </p>
+        </div>
+        <div class="text-gray-400 text-xs">
+          <p>研究日期：2026年2月 | 基于公开资料整理分析</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+      // Initialize Mermaid with custom configuration
+      mermaid.initialize({ 
+          startOnLoad: true,
+          theme: 'base',
+          themeVariables: {
+              primaryColor: '#f8fafc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#64748b',
+              lineColor: '#64748b',
+              secondaryColor: '#e2e8f0',
+              tertiaryColor: '#f1f5f9',
+              background: '#ffffff',
+              mainBkg: '#f8fafc',
+              secondBkg: '#e2e8f0',
+              tertiaryBkg: '#f1f5f9',
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '14px'
+          },
+          flowchart: {
+              useMaxWidth: false,
+              htmlLabels: true,
+              curve: 'basis',
+              padding: 20
+          },
+          sequence: {
+              useMaxWidth: false,
+              wrap: true,
+              padding: 20
+          },
+          gantt: {
+              useMaxWidth: false,
+              padding: 20
+          }
+      });
+
+      // Initialize Mermaid Controls for zoom and pan
+      function initializeMermaidControls() {
+          const containers = document.querySelectorAll('.mermaid-container');
+
+          containers.forEach(container => {
+              const mermaidElement = container.querySelector('.mermaid');
+              let scale = 1;
+              let isDragging = false;
+              let startX, startY, translateX = 0, translateY = 0;
+
+              // 触摸相关状态
+              let isTouch = false;
+              let touchStartTime = 0;
+              let initialDistance = 0;
+              let initialScale = 1;
+              let isPinching = false;
+
+              // Zoom controls
+              const zoomInBtn = container.querySelector('.zoom-in');
+              const zoomOutBtn = container.querySelector('.zoom-out');
+              const resetBtn = container.querySelector('.reset-zoom');
+              const fullscreenBtn = container.querySelector('.fullscreen');
+
+              function updateTransform() {
+                  mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                  if (scale > 1) {
+                      container.classList.add('zoomed');
+                  } else {
+                      container.classList.remove('zoomed');
+                  }
+
+                  mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+              }
+
+              if (zoomInBtn) {
+                  zoomInBtn.addEventListener('click', () => {
+                      scale = Math.min(scale * 1.25, 4);
+                      updateTransform();
+                  });
+              }
+
+              if (zoomOutBtn) {
+                  zoomOutBtn.addEventListener('click', () => {
+                      scale = Math.max(scale / 1.25, 0.3);
+                      if (scale <= 1) {
+                          translateX = 0;
+                          translateY = 0;
+                      }
+                      updateTransform();
+                  });
+              }
+
+              if (resetBtn) {
+                  resetBtn.addEventListener('click', () => {
+                      scale = 1;
+                      translateX = 0;
+                      translateY = 0;
+                      updateTransform();
+                  });
+              }
+
+              if (fullscreenBtn) {
+                  fullscreenBtn.addEventListener('click', () => {
+                      if (container.requestFullscreen) {
+                          container.requestFullscreen();
+                      } else if (container.webkitRequestFullscreen) {
+                          container.webkitRequestFullscreen();
+                      } else if (container.msRequestFullscreen) {
+                          container.msRequestFullscreen();
+                      }
+                  });
+              }
+
+              // Mouse Events
+              mermaidElement.addEventListener('mousedown', (e) => {
+                  if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                  isDragging = true;
+                  startX = e.clientX - translateX;
+                  startY = e.clientY - translateY;
+                  mermaidElement.style.cursor = 'grabbing';
+                  updateTransform();
+                  e.preventDefault();
+              });
+
+              document.addEventListener('mousemove', (e) => {
+                  if (isDragging && !isTouch) {
+                      translateX = e.clientX - startX;
+                      translateY = e.clientY - startY;
+                      updateTransform();
+                  }
+              });
+
+              document.addEventListener('mouseup', () => {
+                  if (isDragging && !isTouch) {
+                      isDragging = false;
+                      mermaidElement.style.cursor = 'grab';
+                      updateTransform();
+                  }
+              });
+
+              document.addEventListener('mouseleave', () => {
+                  if (isDragging && !isTouch) {
+                      isDragging = false;
+                      mermaidElement.style.cursor = 'grab';
+                      updateTransform();
+                  }
+              });
+
+              // 获取两点之间的距离
+              function getTouchDistance(touch1, touch2) {
+                  return Math.hypot(
+                      touch2.clientX - touch1.clientX,
+                      touch2.clientY - touch1.clientY
+                  );
+              }
+
+              // Touch Events - 触摸事件处理
+              mermaidElement.addEventListener('touchstart', (e) => {
+                  isTouch = true;
+                  touchStartTime = Date.now();
+
+                  if (e.touches.length === 1) {
+                      // 单指拖动
+                      isPinching = false;
+                      isDragging = true;
+
+                      const touch = e.touches[0];
+                      startX = touch.clientX - translateX;
+                      startY = touch.clientY - translateY;
+
+                  } else if (e.touches.length === 2) {
+                      // 双指缩放
+                      isPinching = true;
+                      isDragging = false;
+
+                      const touch1 = e.touches[0];
+                      const touch2 = e.touches[1];
+                      initialDistance = getTouchDistance(touch1, touch2);
+                      initialScale = scale;
+                  }
+
+                  e.preventDefault();
+              }, { passive: false });
+
+              mermaidElement.addEventListener('touchmove', (e) => {
+                  if (e.touches.length === 1 && isDragging && !isPinching) {
+                      // 单指拖动
+                      const touch = e.touches[0];
+                      translateX = touch.clientX - startX;
+                      translateY = touch.clientY - startY;
+                      updateTransform();
+
+                  } else if (e.touches.length === 2 && isPinching) {
+                      // 双指缩放
+                      const touch1 = e.touches[0];
+                      const touch2 = e.touches[1];
+                      const currentDistance = getTouchDistance(touch1, touch2);
+
+                      if (initialDistance > 0) {
+                          const newScale = Math.min(Math.max(
+                              initialScale * (currentDistance / initialDistance),
+                              0.3
+                          ), 4);
+                          scale = newScale;
+                          updateTransform();
+                      }
+                  }
+
+                  e.preventDefault();
+              }, { passive: false });
+
+              mermaidElement.addEventListener('touchend', (e) => {
+                  // 重置状态
+                  if (e.touches.length === 0) {
+                      isDragging = false;
+                      isPinching = false;
+                      initialDistance = 0;
+
+                      // 延迟重置isTouch，避免鼠标事件立即触发
+                      setTimeout(() => {
+                          isTouch = false;
+                      }, 100);
+                  } else if (e.touches.length === 1 && isPinching) {
+                      // 从双指变为单指，切换为拖动模式
+                      isPinching = false;
+                      isDragging = true;
+
+                      const touch = e.touches[0];
+                      startX = touch.clientX - translateX;
+                      startY = touch.clientY - translateY;
+                  }
+
+                  updateTransform();
+              });
+
+              mermaidElement.addEventListener('touchcancel', (e) => {
+                  isDragging = false;
+                  isPinching = false;
+                  initialDistance = 0;
+
+                  setTimeout(() => {
+                      isTouch = false;
+                  }, 100);
+
+                  updateTransform();
+              });
+
+              // Enhanced wheel zoom with better center point handling
+              container.addEventListener('wheel', (e) => {
+                  e.preventDefault();
+                  const rect = container.getBoundingClientRect();
+                  const centerX = rect.width / 2;
+                  const centerY = rect.height / 2;
+
+                  const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                  const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                  // Adjust translation to zoom towards center
+                  if (newScale !== scale) {
+                      const scaleDiff = newScale / scale;
+                      translateX = translateX * scaleDiff;
+                      translateY = translateY * scaleDiff;
+                      scale = newScale;
+
+                      if (scale <= 1) {
+                          translateX = 0;
+                          translateY = 0;
+                      }
+
+                      updateTransform();
+                  }
+              });
+
+              // Initialize display
+              updateTransform();
+          });
+      }
+
+      // Initialize Mermaid controls when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+          initializeMermaidControls();
+      });
+
+      // Table of Contents functionality
+      document.addEventListener('DOMContentLoaded', function() {
+          const tocLinks = document.querySelectorAll('.toc-link');
+          const sections = document.querySelectorAll('section[id], div[id]');
+          
+          // Smooth scrolling for TOC links
+          tocLinks.forEach(link => {
+              link.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const targetId = this.getAttribute('href').substring(1);
+                  const targetElement = document.getElementById(targetId);
+                  
+                  if (targetElement) {
+                      const offsetTop = targetElement.offsetTop - 20;
+                      window.scrollTo({
+                          top: offsetTop,
+                          behavior: 'smooth'
+                      });
+                  }
+              });
+          });
+          
+          // Update active TOC link on scroll
+          function updateActiveTocLink() {
+              let current = '';
+              sections.forEach(section => {
+                  const sectionTop = section.offsetTop - 100;
+                  if (window.scrollY >= sectionTop) {
+                      current = section.getAttribute('id');
+                  }
+              });
+              
+              tocLinks.forEach(link => {
+                  link.classList.remove('active');
+                  if (link.getAttribute('href') === '#' + current) {
+                      link.classList.add('active');
+                  }
+              });
+          }
+          
+          window.addEventListener('scroll', updateActiveTocLink);
+          updateActiveTocLink(); // Initial call
+          
+          // Mobile menu toggle (if needed)
+          const mobileMenuToggle = document.createElement('button');
+          mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+          mobileMenuToggle.className = 'fixed top-4 left-4 z-50 lg:hidden bg-white p-2 rounded-lg shadow-lg';
+          mobileMenuToggle.addEventListener('click', function() {
+              const sidebar = document.querySelector('.toc-sidebar');
+              sidebar.classList.toggle('open');
+          });
+          document.body.appendChild(mobileMenuToggle);
+      });
+
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', function(event) {
+          const sidebar = document.querySelector('.toc-sidebar');
+          const hamburgerButton = document.querySelector('button.lg\\:hidden');
+
+          // Only if we are in mobile view (window width <= 1024) and the sidebar is open
+          if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
+              // Check if the click is outside the sidebar and not on the hamburger button
+              if (!sidebar.contains(event.target) && event.target !== hamburgerButton) {
+                  sidebar.classList.remove('open');
+              }
+          }
+      });
+  </script>
+
+
+</body></html>
